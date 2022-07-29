@@ -12,7 +12,7 @@
  - Basics of Benders-dual/CCG Algorithm to solve Two-Stage RO problems
  - A simple way to realize optimization modeling in MATLAB (ONLY ~100 lines are in both .m files)
 # What you CANNOT learn
- - How to do in by yourself (just try it by yourself and you would definitely learn more!)
+ - **How to do in by yourself (just try it by yourself and you would definitely learn more!)**
 # Acknowledgement
  - [鲁棒优化| C&CG算法求解两阶段鲁棒优化：全网最完整、最详细的【入门-完整推导-代码实现】笔记](https://zhuanlan.zhihu.com/p/534285185). I found some tricky point in it about how to guarantee Master problem could provide initial feasible solution for Subproblem to make both algorithms work, so thanks.
 # To be updated/some issue
