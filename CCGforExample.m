@@ -13,7 +13,6 @@ C = [22, 33, 24;
     33, 23, 30;
     20, 25, 27];
 b=[22, 33, 24, 33, 23, 30, 20, 25, 27]';
-% # D = [206+40, 274+40, 220+40]
 dl = [206, 274, 220]';
 du = [40, 40, 40]';
 G=zeros(6,9);
@@ -42,8 +41,8 @@ z=sdpvar(3,1);
 pi=sdpvar(6,1);
 d=sdpvar(3,1);
 g=sdpvar(3,1);
-u=binvar(9,1); % ancillary variables for BigM on (b-G'*pi).*x==0, u(j)==0 means x(j)==0, (b-G'*pi)(j) free
-v=binvar(6,1); % ancillary variables for BigM on (G*x-(h-E*y-M*g)).*pi==0, v(i)==0 means pi(i)==0, (G*x-(h-E*y-M*g))(i) free
+u=binvar(9,1); % ancillary binary variables for BigM on (b-G'*pi).*x==0, u(j)==0 means x(j)==0, (b-G'*pi)(j) free
+v=binvar(6,1); % ancillary binary variables for BigM on (G*x-(h-E*y-M*g)).*pi==0, v(i)==0 means pi(i)==0, (G*x-(h-E*y-M*g))(i) free
 
 %% CCG algorithm
 % Original Problem: min_{y} c'*y + max_{u} min_{x∈F(y,u)} b'*x s.t. A*y>=d,
@@ -79,12 +78,12 @@ while UB-LB>=Epsilon
 %   !!! Important Note: if we use  
 %       Cons_SP2 = [Cons_SP2, (h-E*[s_y;s_z]-M*g)-G*x(:,k) <= BigM*(1-v)];
 %   here, it would not work !!! Because we need
-%   to put left-hand side of "XXX >= 0" in Big-M method.
+%   to put left-hand side of "XXX >= 0" in Big-M method to be "XXX <= BigM*(1-v)".
     Cons_SP2 = [Cons_SP2, b-G'*pi <= BigM*(1-u), x(:,k)<=BigM*u];
     sol_SP2 = optimize(Cons_SP2,Obj_SP2,ops);
     s_g = value(g);
     
-    % Add constraints and variables in MP2
+    % Add constraints and variables "x(:,k+1)" in MP2
     if sol_SP2.problem==0 % SP2 is solved
         UB=min(UB,[f;a]'*[s_y;s_z]+value(-Obj_SP2));
         display(['Iter ',num2str(k),' g = ',num2str(s_g')]);
