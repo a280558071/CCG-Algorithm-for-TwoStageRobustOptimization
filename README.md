@@ -15,5 +15,7 @@
  - How to do in by yourself (just try it by yourself and you would definitely learn more!)
 # Acknowledgement
  - [鲁棒优化| C&CG算法求解两阶段鲁棒优化：全网最完整、最详细的【入门-完整推导-代码实现】笔记](https://zhuanlan.zhihu.com/p/534285185). I found some tricky point in it about how to guarantee Master problem could provide initial feasible solution for Subproblem to make both algorithms work, so thanks.
+# To be updated/some issue
+ - When Subproblem is unbounded both file would fail. Because I still don't know how to identify scenario for which Q(y*)=inf.
 # Ref
 [1] Zeng, Bo, and Long Zhao. "Solving two-stage robust optimization problems using a column-and-constraint generation method." Operations Research Letters 41, no. 5 (2013): 457-461.
