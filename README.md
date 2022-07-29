@@ -1,4 +1,4 @@
-# CCG Algorithm for Two-Stage Robust Optimization
+# Benders-dual/CCG Algorithm for Two-Stage Robust Optimization
  This project contains two MATLAB files explain Benders-dual/Column and Constraints Generation (CCG) Algorithm to solve Two-Stage Robust Optimization (RO) problems, as below (The uncertainty set $\mathcal{U}$ could be a discrete set or a polyhedron.): 
 ![image](https://user-images.githubusercontent.com/11343667/181718512-b07c68b6-7e4f-4e6f-80cd-9d01cc22c952.png)
  - Bold characters (**A,y,x,c,d,u...**) denote matrix/vector in above.
