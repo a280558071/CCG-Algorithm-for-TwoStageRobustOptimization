@@ -57,7 +57,7 @@ Obj_MP2=[f;a]'*[y;z]+eta;
 Cons_MP2=[z<=800*y, x(:,1)>=0, z>=0, eta>=0, sum(z)>=772];
 % sum(z)>=772 is added because we need to ensure Subproblem is feasible
 % when s_y and s_z is produced in first-round of MP2.
-Cons_MP2=[Cons_MP2, eta>=b'*x(:,1)];
+% Cons_MP2=[Cons_MP2, eta>=b'*x(:,1)];
 ops=sdpsettings('solver','gurobi','verbose',0);
 
 Epsilon=0.01;
@@ -73,12 +73,7 @@ while UB-LB>=Epsilon
     Obj_SP2 = -b'*x(:,k);
     Cons_SP2 = [pi>=0, x(:,k)>=0, G'*pi<=b, 1>=g>=0, sum(g)<=1.8, g(1)+g(2)<=1.2, d==dl+du.*g];
     Cons_SP2 = [Cons_SP2, G*x(:,k) >= h-E*[s_y;s_z]-M*g];
-    Cons_SP2 = [Cons_SP2, (h(1:3)-E(1:3,:)*[s_y;s_z]-M(1:3,:)*g)-G(1:3,:)*x(:,k) <= BigM*(1-v(1:3)), pi<=BigM*v,...
-        G(4:6,:)*x(:,k)-(h(4:6)-E(4:6,:)*[s_y;s_z]-M(4:6,:)*g) <= BigM*(1-v(4:6))];
-%   !!! Important Note: if we use  
-%       Cons_SP2 = [Cons_SP2, (h-E*[s_y;s_z]-M*g)-G*x(:,k) <= BigM*(1-v)];
-%   here, it would not work !!! Because we need
-%   to put left-hand side of "XXX >= 0" in Big-M method to be "XXX <= BigM*(1-v)".
+    Cons_SP2 = [Cons_SP2, G*x(:,k)-(h-E*[s_y;s_z]-M*g) <= BigM*(1-v), pi<=BigM*v];
     Cons_SP2 = [Cons_SP2, b-G'*pi <= BigM*(1-u), x(:,k)<=BigM*u];
     sol_SP2 = optimize(Cons_SP2,Obj_SP2,ops);
     s_g = value(g);
